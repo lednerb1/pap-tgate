@@ -10,4 +10,8 @@ flask run
 
 # Viewing on Browser
 
-http://localhost:5000/
+[Homepage](http://localhost:5000/)
+
+## Refer to
+
+[Flask Quickstart](http://flask.pocoo.org/docs/dev/quickstart/)
