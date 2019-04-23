@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <h1>Catraca</h1>
+  </head>
+
+  <body>
+    <h3>Bem vindo {% if logged %} {{logged}} {% endif %}</h3>
+    <a href="login">Login</a>
+    {% if logged %}
+    <br>
+    <a href="logout">Logout</a>
+    {% endif %}
+  </body>
+<html>
