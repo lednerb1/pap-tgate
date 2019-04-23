@@ -20,8 +20,6 @@ def index():
         return render('index.html', logged=escape(session['username']))
     return render('index.html')
 
-
-
 @app.route('/login')
 def getLoginView():
     if 'username' in session: # if admin already logged in redirect to dashboard
@@ -49,4 +47,5 @@ def dashboard():
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
+    
     return

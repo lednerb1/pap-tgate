@@ -1,26 +1,28 @@
-<!-- Button to open the modal login form -->
-<button onclick="document.getElementById('id01').style.display='block'">Register</button>
+<html>
 
-<!-- The Modal -->
-<div id="id01" class="modal">
- <span onclick="document.getElementById('id01').style.display='none'"
-class="close" title="Close Modal">&times;</span>
+  <head>
+    <h3> Register </h3>
+  </head>
+  <body>
 
- <!-- Modal Content -->
- <form class="modal-content animate" action="/register">
-   <div class="container">
-     <label for="name"><b>Name</b></label>
-     <input type="text" placeholder="Enter Person Name" name="name" required>
+    <form method="POST" action="/register">
+      <div class="container">
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Person Name" name="name" required>
+        <br>
 
-     <label for="role"><b>Role</b></label>
-     <input type="text" placeholder="Enter Person Role" name="role" required>
+        <label for="cpf"><b>CPF</b></label>
+        <input type="number" placeholder="12345678910" name="cpf">
+        <br>
 
-     <button type="submit">Register</button>
+        <label for="role"><b>Role</b></label>
+        <input type="radio" name="role" value="teacher"> <b>Professor</b> </label>
+        <input type="radio" name="role" value="employer"> <b>Servidor</b> </label>
+        <input type="radio" name="role" value="student" checked> <b>Aluno</b> </label>
+        <br>
 
-   </div>
-
-   <div class="container" style="background-color:#f1f1f1">
-     <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-   </div>
- </form>
-</div>
+        <button type="submit">Register</button>
+      </div>
+    </form>
+  </body>
+</html>
