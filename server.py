@@ -97,5 +97,6 @@ def getRegisters():
 def refreshAttempts():
     error = None
     if request.method == 'POST':
+        pass
     else:
         return render()
