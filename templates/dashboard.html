@@ -16,12 +16,17 @@
         <br>
 
         <label for="role"><b>Role</b></label>
-        <input type="radio" name="role" value="teacher"> <b>Professor</b> </label>
-        <input type="radio" name="role" value="employer"> <b>Servidor</b> </label>
-        <input type="radio" name="role" value="student" checked> <b>Aluno</b> </label>
+        <input type="radio" name="role" value="teachers"> <b>Professor</b> </label>
+        <input type="radio" name="role" value="employee"> <b>Servidor</b> </label>
+        <input type="radio" name="role" value="students" checked> <b>Aluno</b> </label>
         <br>
 
         <button type="submit">Register</button>
+        {% if error %}
+        <br>
+        <p style="color:red"> {{error}} </p>
+        <br>
+        {% endif %}
       </div>
     </form>
   </body>
