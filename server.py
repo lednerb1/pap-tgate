@@ -7,7 +7,6 @@ from collections import namedtuple
 
 admins = [['peterbrendel', 'papehlegal']]
 types = ['teachers', 'employee', 'students']
-
 Person = namedtuple('Person', 'cpf name')
 
 persons = {
@@ -15,7 +14,6 @@ persons = {
     'students' : [],
     'employee' : []
 }
-
 
 app = Flask(__name__)
 app.secret_key = b'_9%!@L"9Ylg58zCP]0'
@@ -38,7 +36,7 @@ def insertData(request):
     for type in types:
         if request.form['role'] == type:
             #persons.append( Person(type, request.form['cpf'], request.form['name']) )
-            persons[type].append(Person(int(request.form['cpf']), request.form['name']))
+            persons[type].append(Person(request.form['cpf'], request.form['name']))
             return True
     return False
 
