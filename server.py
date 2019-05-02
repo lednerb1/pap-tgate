@@ -94,7 +94,14 @@ def getRegisters():
 @app.route('/sendRegisters', methods=['POST'])
 def refreshAttempts():
     error = None
+    f = open('templates/registros.html', 'w+')
     if request.method == 'POST':
-        pass
+        f.write(request.form["Passaram"])
+        f.write(request.form["Rejeitados"])
+        return True
     else:
-        return render()
+        return False
+
+@app.route('/viewRegisters')
+def viewRegisters():
+    return redirect(url_for('registros'))

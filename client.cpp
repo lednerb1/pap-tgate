@@ -31,16 +31,17 @@ Catraca::Catraca(int id, vector<string> types){
 }
 
 void Catraca::Passar(string cpf){
-    map<string,string>::iterator i;
-    if((i = this->permitidos.find(cpf)) != this->permitidos.end()){
+    map<string,string>::iterator i = this->permitidos.find(cpf);
+
+    if(i != this->permitidos.end()){
         this->passadas.push_back({i->first, i->second});
     }else{
         this->rejeitadas.push_back(cpf);
     }
 
-    //if(this->passadas.size() + this->rejeitadas.size() > 100){
-    this->HttpSendBuffer();
-    //}
+    if(this->passadas.size() + this->rejeitadas.size() > 9){
+      this->HttpSendBuffer();
+    }
 }
 
 string data;
@@ -60,7 +61,7 @@ void Catraca::HttpGetList(){
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_easy_init();
 
-    curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:9999/getRegisters");
+    curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:5000/getRegisters");
     // curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &writeCallback);
     curl_easy_perform(curl);
@@ -73,6 +74,7 @@ void Catraca::HttpGetList(){
 
     //cout << data << endl;
     Document d;
+    cout << data << endl;
     d.Parse(data.c_str());
     assert(d.IsObject());
     for(string permitido : this->types){
@@ -81,8 +83,8 @@ void Catraca::HttpGetList(){
         for(Value::ConstValueIterator itr = attr.Begin(); itr != attr.End(); itr++){
             const Value& itr2 = *itr;
             assert(itr2.IsObject());
-            for(Value::ConstMemberIterator item = itr2.MemberBegin(); item != itr2.MemberEnd(); item++)
-                permitidos.insert({ item->name.GetString(), item->value.GetString() });
+            Value::ConstMemberIterator item = itr2.MemberBegin();
+            permitidos.insert({item->value.GetString(), (item+1)->value.GetString()});
         }
     }
 
@@ -90,39 +92,40 @@ void Catraca::HttpGetList(){
 
 void Catraca::HttpSendBuffer() {
     Document d;
-    d.SetObject();
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
 
-    Value array(kArrayType);
-    Document::AllocatorType& allocator = d.GetAllocator();
+    writer.StartObject();
+    writer.String("Passaram");
+    writer.StartArray();
     for(auto& s : this->passadas){
-        //string tmp = s.first + " : " + s.second;
-        Value obj(kObject);
-        Value tmp;
-        obj.SetObject();
-        //tmp.SetString(s.second.c_str(), allocator);
-        obj.AddMember("name", s.second.c_str(), allocator);
-        //tmp.SetString(s.first.c_str(), allocator);
-        obj.AddMember("cpf", s.first.c_str(), allocator);
-        array.PushBack(obj, allocator);
+        string a = s.first + " " + s.second;
+        writer.String(a.c_str());
     }
-
-    d.AddMember("Passaram", array, allocator);
-
-    Value arr(kArrayType);
-    for(string s : this->rejeitadas){
-        Value obj;
-        obj.SetObject();
-        obj.AddMember("cpf", s.c_str(),allocator);
-        arr.PushBack(obj, allocator);
+    writer.EndArray();
+    writer.String("Rejeitados");
+    writer.StartArray();
+    for(string a : this->rejeitadas){
+        writer.String(a.c_str());
     }
+    writer.EndArray();
+    writer.EndObject();
+    d.Parse(s.GetString());
+    cout << s.GetString() << endl;
 
-    d.AddMember("Falharam", arr, allocator);
+    CURL * curl;
 
-    StringBuffer strbuf;
-    Writer<StringBuffer> writer(strbuf);
-    d.Accept(writer);
+    curl_global_init(CURL_GLOBAL_ALL);
+    curl = curl_easy_init();
 
-    cout << strbuf.GetString() << endl;
+    curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:5000/sendRegisters");
+    struct curl_slist *headers=NULL;
+    headers = curl_slist_append(headers, "Accept: application/json");
+    headers = curl_slist_append(headers, "Content-Type: application/json");
+    headers = curl_slist_append(headers, "charsets: utf-8");
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, s.GetString());
+    curl_easy_perform(curl);
+
 
 }
 
