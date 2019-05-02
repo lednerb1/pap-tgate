@@ -116,13 +116,23 @@ def refreshAttempts():
 def viewRegisters():
     passed = []
     reject = []
+    try:
+        with open("passed.tmp", "r") as tmp:
+            for line in tmp:
+                passed.append(line)
+    except:
+        passed = None
 
-    with open("passed.tmp", "r") as tmp:
-        for line in tmp:
-            passed.append(line)
-
-    with open("reject.tmp", "r") as tmp:
-        for line in tmp:
-            reject.append(line)
+    try:
+        with open("reject.tmp", "r") as tmp:
+            for line in tmp:
+                reject.append(line)
+    except:
+        reject = None
 
     return render('registros.html', passed=passed, reject=reject)
+
+@app.route('/logout')
+def logout():
+    session.pop('username')
+    return redirect(url_for('index'))

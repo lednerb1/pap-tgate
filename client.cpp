@@ -22,6 +22,9 @@ public:
     void Passar(string cpf);
     void HttpGetList();
     void HttpSendBuffer();
+    bool inList(string cpf){
+      return permitidos.find(cpf) != permitidos.end();
+    }
 };
 
 Catraca::Catraca(int id, vector<string> types){
@@ -52,8 +55,6 @@ size_t writeCallback(char* buf, size_t size, size_t nmemb, void* up) {
     }
     return size*nmemb;
 }
-
-
 
 void Catraca::HttpGetList(){
     CURL *curl;
@@ -136,6 +137,9 @@ private:
 public:
     Pessoa(string name, lli cpf);
     ~Pessoa();
+    string getData(){
+      return this->name + "\n" + to_string(cpf);
+    }
 };
 
 Pessoa::Pessoa(string name, lli cpf) {
@@ -163,6 +167,8 @@ int main(){
     vector<string> permitidos;
     permitidos.push_back("teachers");
     Catraca * catraca = new Catraca(1, permitidos);
+
+
 
     cout << "Vai mandando os CPF ai bro\n";
     string cpf;
