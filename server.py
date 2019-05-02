@@ -94,14 +94,35 @@ def getRegisters():
 @app.route('/sendRegisters', methods=['POST'])
 def refreshAttempts():
     error = None
-    f = open('templates/registros.html', 'w+')
+    p = open('passed.tmp', 'a+')
+    r = open('reject.tmp', 'a+')
     if request.method == 'POST':
-        f.write(request.form["Passaram"])
-        f.write(request.form["Rejeitados"])
-        return True
+        data = []
+        for _ in request.form:
+            data.append(json.loads(_))
+        data = data[0]
+
+        for _ in data["Passaram"]:
+            p.write(_+"\n")
+
+        for _ in data["Rejeitados"]:
+            r.write(_+"\n")
+
+        return "True"
     else:
-        return False
+        return "False"
 
 @app.route('/viewRegisters')
 def viewRegisters():
-    return redirect(url_for('registros'))
+    passed = []
+    reject = []
+
+    with open("passed.tmp", "r") as tmp:
+        for line in tmp:
+            passed.append(line)
+
+    with open("reject.tmp", "r") as tmp:
+        for line in tmp:
+            reject.append(line)
+
+    return render('registros.html', passed=passed, reject=reject)

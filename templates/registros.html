@@ -1,0 +1,53 @@
+<html>
+
+  <head>
+
+    <style>
+
+      * {
+        color: white
+      }
+
+      body {
+        background-color: #202020;
+      }
+
+      input, button {
+        background: #303030;
+        border-color: #505050;
+      }
+
+      ul {
+        list-style-type: none;
+      }
+      
+    </style>
+
+    <h3> All Registers </h3>
+
+  </head>
+
+  <body>
+    {% if passed %}
+      <h2> Passed </h2>
+      <ul>
+      {% for p in passed %}
+        <li> {{p}} </li>
+      {% endfor %}
+      </ul>
+      <br>
+    {% endif %}
+
+    {% if reject %}
+      <h2> Rejected </h2>
+      <ul>
+
+      {% for p in reject %}
+        <li> {{p}} </li>
+      {% endfor %}
+
+      </ul>
+    {% endif %}
+  </body>
+
+</html>

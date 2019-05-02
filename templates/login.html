@@ -1,6 +1,22 @@
 <html>
 
   <head>
+    <style>
+      * {
+        color: white
+      }
+
+      body {
+        background-color: #202020;
+      }
+
+      input, button {
+        background: #303030;
+        border-color: #505050;
+      }
+
+    </style>
+
     <h3> Admin login </h3>
   </head>
 
@@ -15,7 +31,7 @@
 
         <button type="submit">Login</button>
       </form>
-    </divs
+    </div>
     {% if err %}
       <br>
       <a> Warning: {{err}} <a>
