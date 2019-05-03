@@ -17,6 +17,18 @@
         border-color: #505050;
       }
 
+      .button {
+        font: 16px oswald;
+        text-decoration: none;
+        background-color: #303030;
+        color: white;
+        padding: 4px 8px 4px 8px;
+        border-top: 2px solid #505050;
+        border-right: 2px solid #353535;
+        border-bottom: 2px solid #353535;
+        border-left: 2px solid #505050;
+      }
+
     </style>
 
     <h1>Catraca</h1>
@@ -24,12 +36,18 @@
 
   <body>
     <h3>Bem vindo {% if logged %} {{logged}} {% endif %}</h3>
-    <a href="login">Login</a>
+    {% if logged %}
+    <a class="button" href="dashboard">Dashboard</a>
+    {% else %}
+    <a class="button" href="login">Login</a>
+    {% endif %}
+    <br>
+    <br>
+    <a class="button" href="viewRegisters">View Registers</a>
     {% if logged %}
     <br>
-    <a href="viewRegisters">View Registers</a>
     <br>
-    <a href="logout">Logout</a>
+    <a class="button" href="logout">Logout</a>
     <br>
     {% endif %}
   </body>

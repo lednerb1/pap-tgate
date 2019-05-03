@@ -169,12 +169,12 @@ int main(){
     Catraca * catraca = new Catraca(1, permitidos);
 
 
-
     cout << "Vai mandando os CPF ai bro\n";
     string cpf;
     while(cin >> cpf) {
         catraca->Passar(cpf);
     }
 
+    delete catraca;
 
 }

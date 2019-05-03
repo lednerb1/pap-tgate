@@ -5,7 +5,7 @@ from flask import json as fson
 import simplejson as json
 from collections import namedtuple
 
-admins = [['peterbrendel', 'papehlegal']]
+admins = [['peterbrendel', 'papehlegal'], ['admin', 'admin']]
 types = ['teachers', 'employee', 'students']
 Person = namedtuple('Person', 'cpf name')
 
@@ -41,6 +41,7 @@ def insertData(request):
     return False
 
 @app.route('/')
+@app.route('/index')
 def index():
     if 'username' in session:
         return render('index.html', logged=escape(session['username']))

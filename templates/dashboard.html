@@ -16,6 +16,19 @@
         background: #303030;
         border-color: #505050;
       }
+
+      .button {
+        font: 16px oswald;
+        text-decoration: none;
+        background-color: #303030;
+        color: white;
+        padding: 4px 8px 4px 8px;
+        border-top: 2px solid #505050;
+        border-right: 2px solid #353535;
+        border-bottom: 2px solid #353535;
+        border-left: 2px solid #505050;
+      }
+
       </style>
 
     <h3> Register </h3>
@@ -44,6 +57,9 @@
         <p style="color:red"> {{error}} </p>
         <br>
         {% endif %}
+        <br>
+        <br>
+        <a class="button" href="/">Back</a>
       </div>
     </form>
   </body>
